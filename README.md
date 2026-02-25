@@ -33,4 +33,4 @@ This application was developed as part of **school apprenticeship practice** to 
 
 ## Author
 Created by **Hojrak**
-School Internship Project – 2026
+School apprenticeship Project – 2026
