@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:test/components/drawer.dart';
 import 'package:test/models/note.dart';
 import 'package:test/models/note_db.dart';
 
@@ -97,49 +99,64 @@ class _HomePageState extends State<HomePage> {
     List<Note> currentNotes = NoteDb.currentNotes;
 
     return Scaffold(
-      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.grey[100],
-        centerTitle: true,
-        title: const Text(
-          'Flutter Note',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
+        backgroundColor: Colors.transparent,
+        foregroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
+      backgroundColor: Theme.of(context).colorScheme.background,
       floatingActionButton: FloatingActionButton(
         onPressed: createNote,
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        foregroundColor: const Color.fromARGB(255, 0, 0, 0),
         child: const Icon(Icons.add),
       ),
-      body: ListView.builder(
-        itemCount: currentNotes.length,
-        itemBuilder: (context, index) {
-          // get the note at the current index
-          final note = currentNotes[index];
-
-          // list tile UI
-          return ListTile(
-            title: Text(note.text),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // edit button
-                IconButton(
-                  onPressed: () => updateNote(note),
-                  icon: const Icon(Icons.edit),
-                ),
-
-                // delete button
-                IconButton(
-                  onPressed: () => deleteNote(note.id),
-                  icon: const Icon(Icons.delete),
-                ),
-              ],
+      drawer: const MyDrawer(),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // heading
+          Padding(
+            padding: const EdgeInsets.only(left: 35),
+            child: Text(
+              'Flutter Note',
+              style: GoogleFonts.rockSalt(
+                fontSize: 35,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
             ),
-          );
-        },
+          ),
+
+          // lsit of notes
+          Expanded(
+            child: ListView.builder(
+              itemCount: currentNotes.length,
+              itemBuilder: (context, index) {
+                // get the note at the current index
+                final note = currentNotes[index];
+
+                // list tile UI
+                return ListTile(
+                  title: Text(note.text),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // edit button
+                      IconButton(
+                        onPressed: () => updateNote(note),
+                        icon: const Icon(Icons.edit),
+                      ),
+
+                      // delete button
+                      IconButton(
+                        onPressed: () => deleteNote(note.id),
+                        icon: const Icon(Icons.delete),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

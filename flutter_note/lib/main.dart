@@ -2,13 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'pages/home.dart';
 import 'models/note_db.dart';
+import 'theme/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NoteDb.init();
 
   runApp(
-    ChangeNotifierProvider(create: (context) => NoteDb(), child: const MyApp()),
+    MultiProvider(
+      providers: [
+        // note database provider
+        ChangeNotifierProvider(create: (context) => NoteDb()),
+        // theme provider
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 
@@ -17,9 +26,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: const HomePage(),
+      theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
 }
