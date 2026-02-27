@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test/pages/settings_page.dart';
 
 class DrawerTile extends StatelessWidget {
   final String title;
@@ -16,7 +17,17 @@ class DrawerTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 25.0),
-      child: ListTile(title: Text(title), leading: leading, onTap: onTap),
+      child: ListTile(
+        title: Text(
+          title,
+          style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),
+        ),
+        leading: leading,
+        onTap: (){
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
+        },
+      ),
     );
   }
 }

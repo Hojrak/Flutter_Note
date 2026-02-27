@@ -11,16 +11,20 @@ class MyDrawer extends StatelessWidget {
       child: Column(
         children: [
           // header
-          DrawerHeader(child: Icon(Icons.note)),
+          const DrawerHeader(child: Icon(Icons.note)),
 
           //note title
-          DrawerTile(title: "Notes", leading: Icon(Icons.home), onTap: () {}),
+          DrawerTile(
+            title: "Notes",
+            leading: const Icon(Icons.home),
+            onTap: () {},
+          ),
 
           // settings tile
           DrawerTile(
             title: "Settings",
-            leading: Icon(Icons.settings),
-            onTap: () {},
+            leading: const Icon(Icons.settings),
+            onTap: () => Navigator.pop(context),
           ),
         ],
       ),
