@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:test/components/drawer.dart';
+import 'package:test/components/note_title.dart';
 import 'package:test/models/note.dart';
 import 'package:test/models/note_db.dart';
+import 'package:test/pages/note_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -134,24 +136,20 @@ class _HomePageState extends State<HomePage> {
                 final note = currentNotes[index];
 
                 // list tile UI
-                return ListTile(
-                  title: Text(note.text),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // edit button
-                      IconButton(
-                        onPressed: () => updateNote(note),
-                        icon: const Icon(Icons.edit),
+                final firstLine = note.text.split('\n').first;
+                return NoteTitle(
+                  text: firstLine,
+                  note: note,
+                  onEditPressed: () => updateNote(note),
+                  onDeletePressed: () => deleteNote(note.id),
+                  onTitleTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NoteDetailPage(note: note),
                       ),
-
-                      // delete button
-                      IconButton(
-                        onPressed: () => deleteNote(note.id),
-                        icon: const Icon(Icons.delete),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 );
               },
             ),

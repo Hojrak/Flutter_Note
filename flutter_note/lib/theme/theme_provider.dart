@@ -19,10 +19,11 @@ class ThemeProvider with ChangeNotifier {
 
   // toggle theme
   void toggleTheme() {
+    // switch to the opposite theme
     if (_themeData == darkTheme) {
-      themeData = darkTheme;
-    } else {
       themeData = lightTheme;
+    } else {
+      themeData = darkTheme;
     }
   }
 }
