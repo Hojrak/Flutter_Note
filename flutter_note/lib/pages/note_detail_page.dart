@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:test/models/note.dart';
-import 'package:test/models/note_db.dart';
+import 'package:flutter_note/models/note.dart';
+import 'package:flutter_note/models/note_db.dart';
 
 class NoteDetailPage extends StatefulWidget {
   final Note note;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:test/components/drawer.dart';
-import 'package:test/components/note_title.dart';
-import 'package:test/models/note.dart';
-import 'package:test/models/note_db.dart';
-import 'package:test/pages/note_detail_page.dart';
+import 'package:flutter_note/components/drawer.dart';
+import 'package:flutter_note/components/note_title.dart';
+import 'package:flutter_note/models/note.dart';
+import 'package:flutter_note/models/note_db.dart';
+import 'package:flutter_note/pages/note_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -92,14 +92,8 @@ class _HomePageState extends State<HomePage> {
     context.read<NoteDb>().deleteNote(id);
   }
 
+  @override
   Widget build(BuildContext context) {
-    // note database instance
-    final noteDb = context.watch<NoteDb>();
-
-    // current notes
-
-    List<Note> currentNotes = NoteDb.currentNotes;
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -127,27 +121,32 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // lsit of notes
+          // list of notes
           Expanded(
-            child: ListView.builder(
-              itemCount: currentNotes.length,
-              itemBuilder: (context, index) {
-                // get the note at the current index
-                final note = currentNotes[index];
+            child: Consumer<NoteDb>(
+              builder: (context, noteDb, child) {
+                List<Note> currentNotes = NoteDb.currentNotes;
+                return ListView.builder(
+                  itemCount: currentNotes.length,
+                  itemBuilder: (context, index) {
+                    // get the note at the current index
+                    final note = currentNotes[index];
 
-                // list tile UI
-                final firstLine = note.text.split('\n').first;
-                return NoteTitle(
-                  text: firstLine,
-                  note: note,
-                  onEditPressed: () => updateNote(note),
-                  onDeletePressed: () => deleteNote(note.id),
-                  onTitleTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NoteDetailPage(note: note),
-                      ),
+                    // list tile UI
+                    final firstLine = note.text.split('\n').first;
+                    return NoteTitle(
+                      text: firstLine,
+                      note: note,
+                      onEditPressed: () => updateNote(note),
+                      onDeletePressed: () => deleteNote(note.id),
+                      onTitleTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NoteDetailPage(note: note),
+                          ),
+                        );
+                      },
                     );
                   },
                 );

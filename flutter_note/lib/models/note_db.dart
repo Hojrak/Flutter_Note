@@ -27,7 +27,7 @@ class NoteDb extends ChangeNotifier {
 
     await isar.writeTxn(() => isar.notes.put(newNote));
 
-    fetchNotes();
+    await fetchNotes();
   }
 
   //READ - all notes from database

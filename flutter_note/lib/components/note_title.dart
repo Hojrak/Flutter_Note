@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:test/models/note.dart';
+import 'package:flutter_note/models/note.dart';
+
+enum NoteAction { edit, delete }
 
 class NoteTitle extends StatelessWidget {
   final String text;
@@ -36,16 +38,31 @@ class NoteTitle extends StatelessWidget {
             ),
           ),
         ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // edit button
-            IconButton(onPressed: onEditPressed, icon: const Icon(Icons.edit)),
-
-            // delete button
-            IconButton(
-              onPressed: onDeletePressed,
-              icon: const Icon(Icons.delete),
+        trailing: PopupMenuButton<NoteAction>(
+          icon: const Icon(Icons.more_vert),
+          onSelected: (NoteAction action) {
+            if (action == NoteAction.edit) {
+              onEditPressed?.call();
+            } else if (action == NoteAction.delete) {
+              onDeletePressed?.call();
+            }
+          },
+          itemBuilder: (context) => [
+            const PopupMenuItem(
+              value: NoteAction.edit,
+              child: Row(
+                children: [Icon(Icons.edit), SizedBox(width: 8), Text('Edit')],
+              ),
+            ),
+            const PopupMenuItem(
+              value: NoteAction.delete,
+              child: Row(
+                children: [
+                  Icon(Icons.delete, color: Colors.red),
+                  SizedBox(width: 8),
+                  Text('Delete', style: TextStyle(color: Colors.red)),
+                ],
+              ),
             ),
           ],
         ),
