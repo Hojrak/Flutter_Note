@@ -50,6 +50,21 @@ class NoteDb extends ChangeNotifier {
     }
   }
 
+  //UPDATE - note with rich text content in database
+  Future<void> updateNoteWithContent(
+    int id,
+    String newText,
+    String? contentJson,
+  ) async {
+    final existingNote = await isar.notes.get(id);
+    if (existingNote != null) {
+      existingNote.text = newText;
+      existingNote.contentJson = contentJson;
+      await isar.writeTxn(() => isar.notes.put(existingNote));
+      await fetchNotes();
+    }
+  }
+
   //DELETE - note from database
 
   Future<void> deleteNote(int id) async {

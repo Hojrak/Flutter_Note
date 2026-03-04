@@ -9,4 +9,7 @@ part 'note.g.dart';
 class Note {
   Id id = Isar.autoIncrement;
   late String text;
+
+  // Store the Quill Delta content as JSON string for rich text
+  String? contentJson;
 }

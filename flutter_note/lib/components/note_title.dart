@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_note/models/note.dart';
 
-enum NoteAction { edit, delete }
+enum NoteAction { edit, editPlain, delete }
 
 class NoteTitle extends StatelessWidget {
   final String text;
@@ -9,6 +9,7 @@ class NoteTitle extends StatelessWidget {
   final void Function()? onEditPressed;
   final void Function()? onDeletePressed;
   final void Function()? onTitleTap;
+  final void Function()? onEditPlainPressed;
 
   const NoteTitle({
     super.key,
@@ -17,6 +18,7 @@ class NoteTitle extends StatelessWidget {
     this.onEditPressed,
     this.onDeletePressed,
     this.onTitleTap,
+    this.onEditPlainPressed,
   });
 
   @override
@@ -43,6 +45,8 @@ class NoteTitle extends StatelessWidget {
           onSelected: (NoteAction action) {
             if (action == NoteAction.edit) {
               onEditPressed?.call();
+            } else if (action == NoteAction.editPlain) {
+              onEditPlainPressed?.call();
             } else if (action == NoteAction.delete) {
               onDeletePressed?.call();
             }
@@ -51,7 +55,21 @@ class NoteTitle extends StatelessWidget {
             const PopupMenuItem(
               value: NoteAction.edit,
               child: Row(
-                children: [Icon(Icons.edit), SizedBox(width: 8), Text('Edit')],
+                children: [
+                  Icon(Icons.text_fields),
+                  SizedBox(width: 8),
+                  Text('Edit (Rich Text)'),
+                ],
+              ),
+            ),
+            const PopupMenuItem(
+              value: NoteAction.editPlain,
+              child: Row(
+                children: [
+                  Icon(Icons.edit),
+                  SizedBox(width: 8),
+                  Text('Edit (Plain Text)'),
+                ],
               ),
             ),
             const PopupMenuItem(

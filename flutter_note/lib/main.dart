@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:provider/provider.dart';
 import 'pages/home.dart';
 import 'models/note_db.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
       builder: (context, themeProvider, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
+          localizationsDelegates: [FlutterQuillLocalizations.delegate],
           home: const HomePage(),
           theme: themeProvider.themeData,
         );

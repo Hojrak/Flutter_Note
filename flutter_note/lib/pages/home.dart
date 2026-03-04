@@ -6,6 +6,7 @@ import 'package:flutter_note/components/note_title.dart';
 import 'package:flutter_note/models/note.dart';
 import 'package:flutter_note/models/note_db.dart';
 import 'package:flutter_note/pages/note_detail_page.dart';
+import 'package:flutter_note/pages/plain_text_editor_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -144,6 +145,15 @@ class _HomePageState extends State<HomePage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => NoteDetailPage(note: note),
+                          ),
+                        );
+                      },
+                      onEditPlainPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PlainTextEditorPage(note: note),
                           ),
                         );
                       },
